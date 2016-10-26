@@ -1,0 +1,14 @@
+{
+  "name": "we-cli",
+  "version": "0.0.1",
+  "bin": {
+    "we": "bin/we"
+  },
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.0",
+    "chokidar": "^1.6.1",
+    "rollup": "^0.36.3",
+    "babel-preset-es2015": "^6.18.0"
+  }
+}
