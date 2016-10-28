@@ -10,11 +10,12 @@ var $path = require('path');
 var util = require('./util');
 var chokidar = require('chokidar');
 var babel = require("babel-core");
-
-var baseDir = $path.join(__dirname, 'src');
-var targetDir = $path.join(__dirname, 'dist');
+var modules = require("./modules");
+var dirname = process.cwd();
+var baseDir = $path.join(dirname, 'src');
+var targetDir = $path.join(dirname, 'dist');
 if (!util.isDir(baseDir)) {
-    return console.log('[we]当前目录不合法');
+    return console.log('[we]当前目录不合法', baseDir);
 }
 
 //dist目录不存在就创建
@@ -24,27 +25,25 @@ if (!util.exists(targetDir)) {
 
 var babelOptions = {
     "presets": [
-        [
-            "es2015"
-        ]
+        "es2015"
     ]
 };
 //.babelrc目录不存在就创建
-if (!util.exists(__dirname + '/.babelrc')) {
-    fs.writeFileSync(__dirname + '/.babelrc', `{
+if (!util.exists(dirname + '/.babelrc')) {
+    fs.writeFileSync(dirname + '/.babelrc', `{
         "presets": [
-            [
-                "es2015"
-            ]
+            "es2015"
         ]
     }`);
 } else {
-    var babelrc = fs.readFileSync(__dirname + '/.babelrc');
+    var babelrc = fs.readFileSync(dirname + '/.babelrc');
     if (babelrc.length) {
         babelOptions = JSON.parse(babelrc);
     }
 }
 
+//第三方包
+var moduleStack = [];
 function execute(baseDir, targetDir) {
     if (util.isFile(baseDir)) {
         fs.readFile(baseDir, function (err, data) {
@@ -52,6 +51,12 @@ function execute(baseDir, targetDir) {
                 var result = data;
                 if ($path.extname(baseDir) === '.js') {
                     result = babel.transform(data, babelOptions).code;
+                    var res = modules.checkModule(result, $path.relative($path.dirname(baseDir), dirname + '/dist/modules'));
+                    if (res.modules.length) {
+                        result = res.result;
+                        //更新第三方包
+                        updateModules(res.modules);
+                    }
                 }
 
                 fs.writeFile(targetDir, result, function (err) {
@@ -70,6 +75,30 @@ function execute(baseDir, targetDir) {
     }
 
 }
+
+function mkdirsSync(dirname) {
+    if (fs.existsSync(dirname)) {
+        return true;
+    } else {
+        if (mkdirsSync($path.dirname(dirname))) {
+            fs.mkdirSync(dirname);
+            return true;
+        }
+    }
+}
+
+function updateModules(list) {
+
+    list.forEach(function (item) {
+        if (moduleStack.indexOf(item) === -1) {
+            moduleStack.push(item);
+            var dist = $path.dirname(item.replace('node_', 'dist/')) + '/index.js';
+            mkdirsSync($path.dirname(dist));
+            modules.packaging(item, dist);
+        }
+    });
+}
+
 
 //1.读取文件夹下所有的文件
 // execute(baseDir, targetDir);

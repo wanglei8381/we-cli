@@ -1,14 +1,30 @@
 {
   "name": "we-cli",
-  "version": "0.0.1",
+  "description": "微信小程序工具",
+  "version": "0.0.5",
+  "author": "lei.wang@wuage.com",
   "bin": {
     "we": "bin/we"
+  },
+  "keywords": [
+    "weixin",
+    "app",
+    "wx-cli",
+    "weixin-cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wanglei8381/we-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/wanglei8381/we-cli/issues"
   },
   "dependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.18.0",
     "chokidar": "^1.6.1",
     "rollup": "^0.36.3",
-    "babel-preset-es2015": "^6.18.0"
+    "babel-preset-es2015": "^6.18.0",
+    "rollup-plugin-commonjs": "^5.0.5"
   }
 }
