@@ -5,7 +5,7 @@
 npm install -g we-cli <br><br>
 
 ###Use
-微信小程序不支持npm和es6预发,we-cli主要解决这两种问题<br>
+支持npm和es6语法,将px自动转化为rpx<br>
 <pre>
 微信小程序结构目录
 {

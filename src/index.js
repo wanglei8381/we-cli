@@ -11,6 +11,7 @@ var util = require('./util');
 var chokidar = require('chokidar');
 var babel = require("babel-core");
 var modules = require("./modules");
+var wxss = require("./wxss");
 var dirname = process.cwd();
 var baseDir = $path.join(dirname, 'src');
 var targetDir = $path.join(dirname, 'dist');
@@ -49,14 +50,22 @@ function execute(baseDir, targetDir) {
         fs.readFile(baseDir, function (err, data) {
             if (!err) {
                 var result = data;
-                if ($path.extname(baseDir) === '.js') {
-                    result = babel.transform(data, babelOptions).code;
+                var extname = $path.extname(baseDir);
+                if (extname === '.js') {//对js处理
+                    try {
+                        result = babel.transform(data, babelOptions).code;
+                    } catch (e) {
+                        result = data.toString();
+                        console.log('[we]代码解析出错', e.stack);
+                    }
                     var res = modules.checkModule(result, $path.relative($path.dirname(baseDir), dirname + '/dist/modules'));
                     if (res.modules.length) {
                         result = res.result;
                         //更新第三方包
                         updateModules(res.modules);
                     }
+                } else if (extname === '.wxss') {//css处理
+                    result = wxss(result);
                 }
 
                 fs.writeFile(targetDir, result, function (err) {
@@ -96,7 +105,7 @@ function updateModules(list) {
             mkdirsSync($path.dirname(dist));
             modules.packaging(item, dist);
         }
-    });
+    })
 }
 
 
@@ -105,7 +114,13 @@ function updateModules(list) {
 //2.监听文件变化,动态修改文件
 var watcher = chokidar.watch(baseDir, {ignored: /[\/\\]\./}).on('all', (event, path) => {
     console.log(event, path);
-    execute(path, path.replace('src', 'dist'));
+    if (event === 'unlink') {
+        fs.unlink(path.replace('src', 'dist'));
+    } else if (event === 'unlinkDir') {
+        fs.rmdirSync(path.replace('src', 'dist'));
+    } else {
+        execute(path, path.replace('src', 'dist'));
+    }
 });
 
 watcher.on('ready', function () {

@@ -1,7 +1,7 @@
 {
   "name": "we-cli",
   "description": "微信小程序工具",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "author": "lei.wang@wuage.com",
   "bin": {
     "we": "bin/we"
