@@ -70,9 +70,13 @@ function checkModule(result, path) {
                 distPath += '/index.js';
             }
             modules.push(distPath);
+
+            if (path[0] != '.') {
+                path = './' + path;
+            }
             return 'require("' + path + '/' + arg1 + '/index.js"\)';
         }
-        console.warn('[we][modules]不能引入系统模块', arg0);
+        console.warn('[we][modules]模块没找到或引入了系统模块', arg0);
     });
     return {
         result: result,

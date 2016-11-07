@@ -58,7 +58,7 @@ function execute(baseDir, targetDir) {
                         result = data.toString();
                         console.log('[we]代码解析出错', e.stack);
                     }
-                    var res = modules.checkModule(result, $path.relative($path.dirname(baseDir), dirname + '/dist/modules'));
+                    var res = modules.checkModule(result, $path.relative($path.dirname(targetDir), dirname + '/dist/modules'));
                     if (res.modules.length) {
                         result = res.result;
                         //更新第三方包
