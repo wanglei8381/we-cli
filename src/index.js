@@ -101,7 +101,10 @@ function updateModules(list) {
     list.forEach(function (item) {
         if (moduleStack.indexOf(item) === -1) {
             moduleStack.push(item);
-            var dist = $path.dirname(item.replace('node_', 'dist/')) + '/index.js';
+
+            var dist = item.replace('node_', 'dist/').replace(/^(.+?modules\/.+?\/).*/, '$1index.js');
+            // var dist = $path.dirname(item.replace('node_', 'dist/')) + '/index.js';
+
             mkdirsSync($path.dirname(dist));
             modules.packaging(item, dist);
         }
