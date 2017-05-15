@@ -1,0 +1,29 @@
+
+  <view class="container">
+    <view>
+      <view bindtap="showTime">{{month}}月{{day}}日{{hour}}{{minute}}分</view>
+      <view class="picker-container open" wx:if="{{showPicker}}">
+        <view class="picker-wrapper">
+          <view class="btn">
+            <span class="pull-left" bindtap="cancel">取消</span>
+            <span class="pull-right" bindtap="confirm">确定</span>
+          </view>
+          <picker-view indicator-style="height: 30px;" value="{{value}}"  bindchange="bindChange">
+            <picker-view-column>
+              <view wx:for="{{months}}" wx:key="item">{{item}}月</view>
+            </picker-view-column>
+            <picker-view-column>
+              <view wx:for="{{days}}" wx:key="item">{{item}}日</view> 
+            </picker-view-column>
+            <picker-view-column>
+              <view wx:for="{{hours}}" wx:key="item">{{item}}</view>
+            </picker-view-column>
+            <picker-view-column>
+              <view wx:for="{{minutes}}" wx:key="item">{{item}}分</view>
+            </picker-view-column>            
+          </picker-view>        
+        </view>
+        <view class="picker-mask"></view>      
+      </view>
+    </view>  
+  </view>

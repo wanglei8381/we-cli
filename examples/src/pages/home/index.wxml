@@ -1,0 +1,11 @@
+<view class="container">
+  <view class="userinfo" bindtap="bindViewTap">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="menu">
+    <a href="#">我要约伴</a>
+    <a href="#">找伴同行</a>
+    <a href="#">我的手机号</a>
+  </view>
+</view>

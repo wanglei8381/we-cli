@@ -16,5 +16,3 @@ exports.isDir = function (path) {
     return exists(path) && fs.statSync(path).isDirectory();
 }
 
-
-exports.checkModules
