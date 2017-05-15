@@ -3,36 +3,36 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 101px;
+  padding-top: 101rpx;
 }
 
 .userinfo-avatar {
-  width: 200px;
-  height: 200px;
+  width: 200rpx;
+  height: 200rpx;
   border-radius: 50%;
-  margin-top: 106px;
+  margin-top: 106rpx;
 }
 
 .userinfo-nickname {
   color: #353535;
-  margin-top: 16px;
+  margin-top: 16rpx;
   font-family: 'Pingfang SC';
 }
 
 .menu{
-  margin-top: 80px;
+  margin-top: 80rpx;
 }
 
 .menu a{
   display: block;
-  width: 436px;
+  width: 436rpx;
   margin: 0 auto;
-  height: 120px;
+  height: 120rpx;
   text-align: center;
-  font-size: 34px;
+  font-size: 34rpx;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 8rpx;
   background: #316CCB;
-  line-height: 120px;
-  margin-bottom: 40px;
+  line-height: 120rpx;
+  margin-bottom: 40rpx;
 }
