@@ -17,4 +17,5 @@ npm install -g we-cli <br><br>
 }
 在项目目录下的控制台运行 we 即可自动编译
 we -w 监听文件更改自动编译
+we -c 清空dist目录
 </pre>
